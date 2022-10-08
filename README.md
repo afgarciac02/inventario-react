@@ -37,10 +37,10 @@
   
   ### Install inventario-express with Docker
    
-    **Build:**
+    **Build:** N/A
 
       
 
-    **Run:**
+    **Run:** N/A
 
       
