@@ -1,18 +1,22 @@
 import axios from "axios";
 
-const API = "https://inventarioback.azurewebsites.net/";
+const API = "https://inventarioback.azurewebsites.net/api/";
 
-const getData = async (endpoint) => {
-  const res = await axios.get(API + endpoint);
-  return await res;
+export const getData = async (endpoint) => {
+  let url = API + endpoint
+  const res = await axios.get(url);
+  return res.data;
 };
 
-const postData = async (endpoint, body) => {
-  const res = await axios.post(API + endpoint, body);
-  return await res;
+export const postData = async (endpoint, body) => {
+  let url = API + endpoint;
+  console.log('url = '+ url);
+  console.log('body = '+JSON.stringify(body));
+  const res = await axios.post(url, JSON.stringify(body));
+  return await res.json();
 };
 
-const deleteData = async (endpoint, body) => {
-  const res = await axios.delete(API + endpoint, body);
+export const deleteData = async (endpoint) => {
+  const res = await axios.delete(API + endpoint);
   return await res;
 };
