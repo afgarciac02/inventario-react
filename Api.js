@@ -10,10 +10,9 @@ export const getData = async (endpoint) => {
 
 export const postData = async (endpoint, body) => {
   let url = API + endpoint;
-  console.log('url = '+ url);
-  console.log('body = '+JSON.stringify(body));
-  const res = await axios.post(url, JSON.stringify(body));
-  return await res.json();
+
+  const res = await axios.post(url, body);
+  return await res.data;
 };
 
 export const deleteData = async (endpoint) => {

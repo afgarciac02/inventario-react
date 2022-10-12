@@ -8,7 +8,8 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     (async () => {
-      // await createUpdateProduct();
+      //await createUpdateProduct();
+      //await DeleteProduct('4');
       await loadProducts();
     })();
   }, []);
@@ -23,8 +24,8 @@ export default function SettingsScreen() {
   const createUpdateProduct = async () => {
     try {
       let body = {
-        "id": "0",
-        "name": "S20",
+        "id": "4",
+        "name": "S21",
         "brand": "Samsung",
         "price": 1000000,
         "quantity": 10
@@ -35,7 +36,7 @@ export default function SettingsScreen() {
       } else {
         response =  await postData('product/create', body)
       }
-      console.log('response = ', response);
+      // console.log('response = ', response);
     } catch (error) {
       console.error('tenemos un error = ', error);
     }
@@ -59,6 +60,7 @@ export default function SettingsScreen() {
           <>
             <Text>{item.id}</Text>
             <Text>{item.brand}</Text>
+            <Text>{item.name}</Text>
             <Text>{item.price}</Text>
             <Text>{item.quantity}</Text>
             <Text>---------------</Text>
