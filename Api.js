@@ -19,3 +19,11 @@ export const deleteData = async (endpoint) => {
   const res = await axios.delete(API + endpoint);
   return await res;
 };
+
+export const getDummy = () => {
+  return [
+    { "id": 1, "name": "Iphone 11", "brand": "Apple", "quantity": 20, "price": 1500000 },
+    { "id": 3, "name": "Iphone 14", "brand": "Apple", "quantity": 20, "price": 1500000 },
+    { "id": 5, "name": "S20", "brand": "Samsung", "quantity": 10, "price": 1000000 }
+  ]
+}
