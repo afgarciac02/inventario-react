@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { View, Text, Button, SafeAreaView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Agregar from "../components/Partes/Agregar";
 
-export default function HomeScreen(props) {
+export default function NewPart(props) {
   const { navigation } = props;
-  const ir = useNavigation();
 
-  const goToSettings = () => {
-    navigation.navigate("Settings");
+  const goToNewPart = (Agregar) => {
+    navigation.navigate("NewPart");
   };
   return (
     <SafeAreaView>
       <Text>Menu</Text>
-      <Button onPress={goToSettings} title="go to Setting" />
+      <Button
+        onPress={() => navigation.navigate(goToNewPart)}
+        title="Create Part"
+      />
     </SafeAreaView>
   );
 }

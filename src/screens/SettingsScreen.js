@@ -6,9 +6,14 @@ import {
   SafeAreaView,
   FlatList,
   StyleSheet,
-  CheckBox,
+  TouchableOpacity,
 } from "react-native";
 import { getData, postData, deleteData, getDummy } from "../../Api";
+import { NumericFormat } from "react-number-format";
+import { NewPart } from "./NewPart";
+import CheckBox from "@react-native-community/checkbox";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SettingsScreen() {
   const [products, setProducts] = useState({});
@@ -65,22 +70,26 @@ export default function SettingsScreen() {
   const [isSelected, setSelection] = useState(false);
 
   return (
-    <View>
+    <View style={styles.tittleBlock}>
+      <Text style={styles.tittle}>Stock Actual</Text>
+      <TouchableOpacity onPress={(NewPart) => {}}>
+        <Text>New Part</Text>
+      </TouchableOpacity>
       <FlatList
         data={products}
         renderItem={({ item }) => {
           // console.log(item);
           return (
-            <View>
+            <View style={styles.content}>
               <View>
-                <Text style={styles.tittle}></Text>
-              </View>
-              <View>
-                <ItemMenu title="Parte: " text={item.id} />
-                <ItemMenu title="Parte: " text={item.brand} />
-                <ItemMenu title="Parte: " text={item.name} />
-                <ItemMenu title="Parte: " text={item.price} />
-                <ItemMenu title="Parte: " text={item.quantity} />
+                <View>
+                  <Text> </Text>
+                  <ItemMenu title="Id: " text={item.id} />
+                  <ItemMenu title="Marca: " text={item.brand} />
+                  <ItemMenu title="Parte: " text={item.name} />
+                  <ItemMenu title="Precio: " text={item.price} />
+                  <ItemMenu title="Unidades: " text={item.quantity} />
+                </View>
               </View>
             </View>
           );
@@ -104,13 +113,20 @@ const styles = StyleSheet.create({
   content: {
     marginHorizontal: 20,
     marginTop: 20,
+    padding: 20,
+    marginVertical: 10,
+    borderRadius: 5,
   },
   tittleBlock: {
     marginBottom: 30,
   },
   tittle: {
     fontWeight: "bold",
-    fontSize: 22,
+    fontSize: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#9E9E9E",
+    color: "white",
   },
   dataContent: {
     marginBottom: 20,
