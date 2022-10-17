@@ -7,12 +7,17 @@ import {
   SafeAreaView,
   StyleSheet,
   TextInput,
-  Picker,
+  //  Picker,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Agregar from "../components/Partes/Agregar";
 import NewPart from "./NewPart";
 import { getData, postData } from "../../Api";
+import RNPickerSelect from "react-native-picker-select";
+import Select from "./NewPart";
+import { DrawerItem } from "@react-navigation/drawer";
+
+// import { Picker } from "@react-native-picker/picker";
 
 export default function HomeScreen(props) {
   const { navigation } = props;
@@ -59,39 +64,37 @@ export default function HomeScreen(props) {
   const goToSettings = (NewPart) => {
     navigation.navigate("NewPart");
   };
-  console.log(products);
+
   return (
     <SafeAreaView>
       <Text style={styles.title}>Agregar Inventario</Text>
-
-      <Picker
-        selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
-
-      <Text style={styles.titlepa}>Marca</Text>
+      <Text style={styles.titlepa}>Seleccionar ID: </Text>
+      <Select
+        touchableText="Select id"
+        title="Partes en Inventario"
+        objkey="= id"
+        objvalue="name"
+        data={loadProducts}
+      />
+      <Text style={styles.titlepa}>Marca: </Text>
       <TextInput
         placeholder="Marca"
         style={styles.input}
         autoCapitalize="none"
       />
-      <Text style={styles.titlepa}>Parte</Text>
+      <Text style={styles.titlepa}>Parte: </Text>
       <TextInput
         placeholder="Nombre Parte"
         style={styles.input}
         autoCapitalize="none"
       />
-      <Text style={styles.titlepa}>Precio</Text>
+      <Text style={styles.titlepa}>Precio: </Text>
       <TextInput
         placeholder="Precio Parte"
         style={styles.input}
         autoCapitalize="none"
       />
-      <Text style={styles.titlepa}>Cantidad</Text>
+      <Text style={styles.titlepa}>Cantidad: </Text>
       <TextInput
         placeholder="Unidades Existentes"
         style={styles.input}
@@ -124,9 +127,16 @@ const styles = StyleSheet.create({
   titlepa: {
     height: 40,
     margin: 2,
-    padding: 13,
+    padding: 10,
   },
   boton: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 6,
+  },
+  select: {
     height: 40,
     margin: 12,
     borderWidth: 1,
