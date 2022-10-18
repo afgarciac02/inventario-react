@@ -33,7 +33,9 @@ export default function HomeScreen(props) {
 
   const loadProducts = async () => {
     try {
-      const response = await getData("product");
+      //const response = await getData("product");
+      const response = getDummy();
+      console.log('response = ' + response);
       setProducts(response);
     } catch (error) {
       console.error("tenemos un error = " + error);
