@@ -29,39 +29,19 @@ export default function SettingsScreen() {
 
   const loadProducts = async () => {
     try {
-      //const response = await getData("product");
-      const response = getDummy();
+      const response = await getData("product");
+      //const response = getDummy();
       setProducts(response);
     } catch (error) {
       console.error("tenemos un error = " + error);
     }
   };
 
-  const createUpdateProduct = async () => {
-    try {
-      let body = {
-        id: "4",
-        name: "S21",
-        brand: "Samsung",
-        price: 1000000,
-        quantity: 10,
-      };
-      let response = "not found";
-      if (body.id != 0) {
-        response = await postData("product/update", body);
-      } else {
-        response = await postData("product/create", body);
-      }
-      // console.log('response = ', response);
-    } catch (error) {
-      console.error("tenemos un error = ", error);
-    }
-  };
 
-  const DeleteProduct = async (id) => {
+  const DeleteProduct = async (id) => { 
     try {
       let response = await deleteData("product/delete/" + id);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error("tenemos un error = ", error);
     }
@@ -72,8 +52,8 @@ export default function SettingsScreen() {
   return (
     <View style={styles.tittleBlock}>
       <Text style={styles.tittle}>Stock Actual</Text>
-      <TouchableOpacity onPress={(NewPart) => {}}>
-        <Text>New Part</Text>
+      <TouchableOpacity onPress={(NewPart) => {loadProducts}}>
+        <Text>RELOAD</Text>
       </TouchableOpacity>
       <FlatList
         data={products}

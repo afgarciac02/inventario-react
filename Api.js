@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = "https://inventarioback.azurewebsites.net/api/";
+// const API = "https://inventarioback.azurewebsites.net/api/";
+ const API = "http://localhost:3000/api/";
 
 export const getData = async (endpoint) => {
   let url = API + endpoint

@@ -15,16 +15,17 @@ import NewPart from "./NewPart";
 import { getData, postData } from "../../Api";
 import RNPickerSelect from "react-native-picker-select";
 import Select from "./NewPart";
+import {Picker} from '@react-native-picker/picker';
 import { DrawerItem } from "@react-navigation/drawer";
-
-// import { Picker } from "@react-native-picker/picker";
 
 export default function HomeScreen(props) {
   const { navigation } = props;
   const ir = useNavigation();
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
+  const [label, setlabel] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
-
+  const [selectedLanguage, setSelectedLanguage] = useState();
+  
   useEffect(() => {
     (async () => {
       await loadProducts();
@@ -33,10 +34,17 @@ export default function HomeScreen(props) {
 
   const loadProducts = async () => {
     try {
-      //const response = await getData("product");
-      const response = getDummy();
-      console.log('response = ' + response);
-      setProducts(response);
+      const response = await getData("product");
+      //const response = getDummy();
+      let name = []
+      let id = []
+      for (let x of response) {
+        name.push(x.name);
+        id.push(x.id);
+      }
+
+      setProducts(name);
+      setlabel(id);
     } catch (error) {
       console.error("tenemos un error = " + error);
     }
@@ -67,17 +75,21 @@ export default function HomeScreen(props) {
     navigation.navigate("NewPart");
   };
 
+  let serviceItems = products.map( (s, i) => {
+    return <Picker.Item value={s} label={s} />
+  });
+
   return (
     <SafeAreaView>
       <Text style={styles.title}>Agregar Inventario</Text>
       <Text style={styles.titlepa}>Seleccionar ID: </Text>
-      <Select
-        touchableText="Select id"
-        title="Partes en Inventario"
-        objkey="= id"
-        objvalue="name"
-        data={loadProducts}
-      />
+      <Picker
+        selectedValue={selectedLanguage}
+        onValueChange={(itemValue, itemIndex) =>
+          setSelectedLanguage(itemValue)
+        }>
+        {serviceItems}
+      </Picker>
       <Text style={styles.titlepa}>Marca: </Text>
       <TextInput
         placeholder="Marca"
