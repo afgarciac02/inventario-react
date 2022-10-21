@@ -5,6 +5,7 @@ import {
   Text,
   Button,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   TextInput,
   //  Picker,
@@ -88,49 +89,51 @@ export default function HomeScreen(props) {
   });
 
   return (
-    <SafeAreaView>
-      <Text style={styles.title}>Agregar Inventario</Text>
-      <Text style={styles.titlepa}>Seleccionar ID: </Text>
-      <Picker
-        selectedValue={selectedId}
-        onValueChange={(itemValue, itemIndex) =>
-          setSelectedId(itemValue)
-        }>
-        {serviceItems}
-      </Picker>
-      <Text style={styles.titlepa}>Marca: </Text>
-      <TextInput
-        placeholder="Marca"
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(x) => setMarca(x)}
-      />
-      <Text style={styles.titlepa}>Nombre: </Text>
-      <TextInput
-        placeholder="Nombre"
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(x) =>setNombre(x)}
-      />
-      <Text style={styles.titlepa}>Precio: </Text>
-      <TextInput
-        placeholder="Precio"
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(x) =>setPrecio(x)}
-      />
-      <Text style={styles.titlepa}>Cantidad: </Text>
-      <TextInput
-        placeholder="Unidades Existentes"
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(x) =>setCantidad(x)}
-      />
-      <Button
-        style={styles.boton}
-        onPress={createUpdateProduct}
-        title="go to Setting"
-      />
+    <SafeAreaView style={styles.cardContainer} >
+      < ScrollView >
+        <Text style={styles.title}>Agregar Inventario</Text>
+        <Text style={styles.titlepa}>Seleccionar ID: </Text>
+        <Picker
+          selectedValue={selectedId}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedId(itemValue)
+          }>
+          {serviceItems}
+        </Picker>
+        <Text style={styles.titlepa}>Marca: </Text>
+        <TextInput
+          placeholder="Marca"
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(x) => setMarca(x)}
+        />
+        <Text style={styles.titlepa}>Nombre: </Text>
+        <TextInput
+          placeholder="Nombre"
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(x) =>setNombre(x)}
+        />
+        <Text style={styles.titlepa}>Precio: </Text>
+        <TextInput
+          placeholder="Precio"
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(x) =>setPrecio(x)}
+        />
+        <Text style={styles.titlepa}>Cantidad: </Text>
+        <TextInput
+          placeholder="Unidades Existentes"
+          style={styles.input}
+          autoCapitalize="none"
+          onChangeText={(x) =>setCantidad(x)}
+        />
+        <Button
+          style={styles.boton}
+          onPress={createUpdateProduct}
+          title="Enviar"
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -169,4 +172,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 6,
   },
+  cardContainer: {
+    overflow: "scroll",
+    transition: 0.5
+  }
 });

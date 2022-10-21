@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 10,
     borderRadius: 5,
+    overflow: "scroll",
   },
   tittleBlock: {
     marginBottom: 30,
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderBottomWidth: 1,
     borderColor: "#FF0101",
+    overflow: "scroll",
   },
   itemMenuTittle: {
     fontWeight: "bold",
