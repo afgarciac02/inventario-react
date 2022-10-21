@@ -7,6 +7,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { getData, deleteData, getDummy } from "../../Api";
 
@@ -31,42 +32,52 @@ export default function SettingsScreen() {
   };
 
 
-  const DeleteProduct = async (id) => { 
+  const DeleteProduct = async (id) => {
     try {
+      console.log("click = "+id);
       let response = await deleteData("product/delete/" + id);
       // console.log(response);
     } catch (error) {
       console.error("tenemos un error = ", error);
     }
   };
-
+  console.log('products = ', products);
   return (
-    <View style={styles.tittleBlock}>
-      <Text style={styles.tittle}>Stock Actual</Text>
-      <TouchableOpacity onPress={(NewPart) => {loadProducts}}>
-        <Text>RELOAD</Text>
-      </TouchableOpacity>
-      <FlatList
-        data={products}
-        renderItem={({ item }) => {
-          // console.log(item);
-          return (
-            <View style={styles.content}>
-              <View>
-                <View>
-                  <Text> </Text>
-                  <ItemMenu title="Id: " text={item.id} />
-                  <ItemMenu title="Marca: " text={item.brand} />
-                  <ItemMenu title="Parte: " text={item.name} />
-                  <ItemMenu title="Precio: " text={item.price} />
-                  <ItemMenu title="Unidades: " text={item.quantity} />
+    <SafeAreaView style={styles.scroll}>
+      <ScrollView>
+        <View style={styles.tittleBlock}>
+          <Text style={styles.tittle}>Stock Actual</Text>
+          <TouchableOpacity onPress={(NewPart) => { loadProducts }}>
+            <Text>RELOAD</Text>
+          </TouchableOpacity>
+          <FlatList
+            data={products}
+            renderItem={({ item }) => {
+              // console.log(item);
+              return (
+                <View style={styles.content}>
+                  <View>
+                    <View>
+                      <Text> </Text>
+                      <ItemMenu title="Id: " text={item.id} />
+                      <ItemMenu title="Marca: " text={item.brand} />
+                      <ItemMenu title="Parte: " text={item.name} />
+                      <ItemMenu title="Precio: " text={item.price} />
+                      <ItemMenu title="Unidades: " text={item.quantity} />
+                      <Button
+                        style={styles.boton}
+                        onPress={() => DeleteProduct(item.id)}
+                        title="Enviar"
+                      />
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-          );
-        }}
-      />
-    </View>
+              );
+            }}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -87,10 +98,10 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 10,
     borderRadius: 5,
-    overflow: "scroll",
   },
   tittleBlock: {
     marginBottom: 30,
+    overflow: "scroll",
   },
   tittle: {
     fontWeight: "bold",
@@ -108,7 +119,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderBottomWidth: 1,
     borderColor: "#FF0101",
-    overflow: "scroll",
   },
   itemMenuTittle: {
     fontWeight: "bold",
@@ -117,5 +127,8 @@ const styles = StyleSheet.create({
   },
   btnLogOut: {
     paddingTop: 20,
+  },
+  scroll: {
+    overflow: "scroll",
   },
 });
