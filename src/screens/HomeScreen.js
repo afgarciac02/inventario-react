@@ -13,7 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 import Agregar from "../components/Partes/Agregar";
 import NewPart from "./NewPart";
 import { getData, postData } from "../../Api";
-import RNPickerSelect from "react-native-picker-select";
 import Select from "./NewPart";
 import {Picker} from '@react-native-picker/picker';
 import { DrawerItem } from "@react-navigation/drawer";
@@ -22,9 +21,12 @@ export default function HomeScreen(props) {
   const { navigation } = props;
   const ir = useNavigation();
   const [products, setProducts] = useState([]);
-  const [label, setlabel] = useState([]);
-  const [nextUrl, setNextUrl] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [select, setSelected] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
+  const [marca, setMarca] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [cantidad, setCantidad] = useState('');
   
   useEffect(() => {
     (async () => {
@@ -37,14 +39,11 @@ export default function HomeScreen(props) {
       const response = await getData("product");
       //const response = getDummy();
       let name = []
-      let id = []
+      setProducts(response);
       for (let x of response) {
         name.push(x.name);
-        id.push(x.id);
       }
-
-      setProducts(name);
-      setlabel(id);
+      setSelected(name);
     } catch (error) {
       console.error("tenemos un error = " + error);
     }
@@ -52,20 +51,29 @@ export default function HomeScreen(props) {
 
   const createUpdateProduct = async () => {
     try {
-      let body = {
-        id: "4",
-        name: "S21",
-        brand: "Samsung",
-        price: 1000000,
-        quantity: 10,
-      };
       let response = "not found";
-      if (body.id != 0) {
-        response = await postData("product/update", body);
-      } else {
+      console.log(selectedId);
+      if (selectedId === undefined || selectedId === '') {
+        let body = {
+          name: nombre,
+          brand: marca,
+          price: precio,
+          quantity: cantidad,
+        };
         response = await postData("product/create", body);
+        console.log('res if =', response);
+      } else {
+        let found = products.find(element => element.name == selectedId);
+        let body = {
+          id: found.id,
+          name: nombre,
+          brand: marca,
+          price: precio,
+          quantity: cantidad,
+        };
+        response = await postData("product/update", body);
+        console.log('res else =', response);
       }
-      // console.log('response = ', response);
     } catch (error) {
       console.error("tenemos un error = ", error);
     }
@@ -75,7 +83,7 @@ export default function HomeScreen(props) {
     navigation.navigate("NewPart");
   };
 
-  let serviceItems = products.map( (s, i) => {
+  let serviceItems = select.map( (s, i) => {
     return <Picker.Item value={s} label={s} />
   });
 
@@ -84,9 +92,9 @@ export default function HomeScreen(props) {
       <Text style={styles.title}>Agregar Inventario</Text>
       <Text style={styles.titlepa}>Seleccionar ID: </Text>
       <Picker
-        selectedValue={selectedLanguage}
+        selectedValue={selectedId}
         onValueChange={(itemValue, itemIndex) =>
-          setSelectedLanguage(itemValue)
+          setSelectedId(itemValue)
         }>
         {serviceItems}
       </Picker>
@@ -95,28 +103,32 @@ export default function HomeScreen(props) {
         placeholder="Marca"
         style={styles.input}
         autoCapitalize="none"
+        onChangeText={(x) => setMarca(x)}
       />
-      <Text style={styles.titlepa}>Parte: </Text>
+      <Text style={styles.titlepa}>Nombre: </Text>
       <TextInput
-        placeholder="Nombre Parte"
+        placeholder="Nombre"
         style={styles.input}
         autoCapitalize="none"
+        onChangeText={(x) =>setNombre(x)}
       />
       <Text style={styles.titlepa}>Precio: </Text>
       <TextInput
-        placeholder="Precio Parte"
+        placeholder="Precio"
         style={styles.input}
         autoCapitalize="none"
+        onChangeText={(x) =>setPrecio(x)}
       />
       <Text style={styles.titlepa}>Cantidad: </Text>
       <TextInput
         placeholder="Unidades Existentes"
         style={styles.input}
         autoCapitalize="none"
+        onChangeText={(x) =>setCantidad(x)}
       />
       <Button
         style={styles.boton}
-        onPress={goToSettings}
+        onPress={createUpdateProduct}
         title="go to Setting"
       />
     </SafeAreaView>

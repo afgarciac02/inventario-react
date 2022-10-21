@@ -8,12 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { getData, postData, deleteData, getDummy } from "../../Api";
-import { NumericFormat } from "react-number-format";
-import { NewPart } from "./NewPart";
-import CheckBox from "@react-native-community/checkbox";
-import { NavigationContainer, StackActions } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
+import { getData, deleteData, getDummy } from "../../Api";
 
 export default function SettingsScreen() {
   const [products, setProducts] = useState({});
@@ -21,8 +16,6 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     (async () => {
-      //await createUpdateProduct();
-      //await DeleteProduct('4');
       await loadProducts();
     })();
   }, []);
@@ -46,8 +39,6 @@ export default function SettingsScreen() {
       console.error("tenemos un error = ", error);
     }
   };
-
-  const [isSelected, setSelection] = useState(false);
 
   return (
     <View style={styles.tittleBlock}>
