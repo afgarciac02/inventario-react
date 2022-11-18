@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // const API = "https://inventarioback.azurewebsites.net/api/";
-const API = "http://localhost:3000/api/";
-//const API = "https://989c-181-237-56-193.ngrok.io/api/";
+// const API = "http://localhost:3000/api/";
+const API = "https://d754-190-242-99-252.ngrok.io/api/";
 
 
 export const getData = async (endpoint) => {
